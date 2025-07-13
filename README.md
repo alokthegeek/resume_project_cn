@@ -1,1 +1,1 @@
-# resume_project_cn
+https://alokthegeek.github.io/resume_project_cn/
