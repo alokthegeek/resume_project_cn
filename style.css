@@ -530,3 +530,23 @@ textarea {
     top: 90%;
   }
 }
+
+/* Fix skills section responsiveness */
+@media screen and (max-width: 700px) {
+  .cards-styled {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .card {
+    width: 8rem;         /* Slightly smaller cards */
+    font-size: 0.9rem;   /* Adjust text size */
+    margin: 0.5rem;      /* Reduce extra spacing */
+  }
+
+  .skills-text h1 {
+    font-size: 2rem;     /* Make heading responsive */
+    text-align: center;
+  }
+}
