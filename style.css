@@ -529,29 +529,33 @@ textarea {
     position: absolute;
     top: 90%;
   }
+}
 
-  /*Mobile fix*/
+@media screen and (max-width: 700px) {
   .cards-styled {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
+    display: flex;
+    flex-wrap: wrap;              /* Force cards to wrap properly */
+    justify-content: center;      /* Center them */
+    gap: 14px;                    /* Add spacing */
+    padding: 0 8px;               /* Give small side padding */
   }
 
   .card {
-    width: 7.5rem;             /* smaller cards for mobile */
-    font-size: 0.85rem;        /* adjust text size */
-    padding: 0.6rem;
-    margin: 0.5rem;
-    text-align: center;        /* center text for better readability */
+    flex: 1 1 calc(45% - 10px);   /* Each card takes ~45% of width */
+    max-width: 180px;             /* Prevent oversized cards */
+    min-width: 140px;             /* Prevent shrinking too much */
+    font-size: 0.85rem;
+    padding: 0.7rem;
+    margin: 0.4rem;
+    text-align: center;
   }
 
   .card::after {
-    width: 35%;               /* shrink progress fill to fit */
-    border-radius: 0 2rem 2rem 0;
+    width: 40%;                   /* Adjust fill size for mobile */
   }
 
   .skills-text h1 {
-    font-size: 2.2rem;
+    font-size: 2rem;
     margin-bottom: 2rem;
     text-align: center;
   }
