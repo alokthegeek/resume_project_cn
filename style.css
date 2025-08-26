@@ -550,3 +550,31 @@ textarea {
     text-align: center;
   }
 }
+
+/* Skills Section Mobile Fix */
+@media screen and (max-width: 700px) {
+  .cards-styled {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .card {
+    width: 7.5rem;             /* smaller cards for mobile */
+    font-size: 0.85rem;        /* adjust text size */
+    padding: 0.6rem;
+    margin: 0.5rem;
+    text-align: center;        /* center text for better readability */
+  }
+
+  .card::after {
+    width: 35%;               /* shrink progress fill to fit */
+    border-radius: 0 2rem 2rem 0;
+  }
+
+  .skills-text h1 {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+}
