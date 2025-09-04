@@ -27,6 +27,25 @@ header {
   text-decoration: none;
 }
 
+/* Topnav tweaks moved from inline */
+.topnav #myLinks {
+  margin: 4rem;
+}
+
+.topnav .icon i {
+  margin: 1rem;
+  color: white;
+}
+
+.topnav .icon {
+  background: none;
+  border: 0;
+  color: white;
+  cursor: pointer;
+  padding: 14px 16px;
+  display: block;
+}
+
 .header-list {
   display: flex;
   flex-direction: row;
@@ -109,12 +128,19 @@ a i {
   margin-right: 1.25rem;
 }
 
-.skills-text h1 {
+.skills-text h1,
+.skills-text h2 {
   padding: 0;
   margin: 0;
   margin-left: 1rem;
   margin-top: 3rem;
   font-size: 3.5rem;
+  color: #174EA6;
+}
+
+.skills-text h1 i,
+.skills-text h2 i {
+  color: #174EA6;
 }
 
 .cards-styled {
@@ -123,15 +149,13 @@ a i {
   justify-content: space-evenly;
 }
 
-.cards-4 {
-}
-
 .cards-div {
   margin-top: 5rem;
 }
 
 .card {
-  background: #6d6d6d; /* Filled color, override for each skill if you want */
+  background: #6d6d6d;
+  /* Filled color, override for each skill if you want */
   color: #fff;
   padding: 0.75rem;
   width: 10rem;
@@ -165,42 +189,66 @@ a i {
 /* --- Custom Progress for each skill --- */
 .li1 {
   background: #295cb4;
-} /* C++ Blue */
+}
+
+/* C++ Blue */
 .li2 {
   background: #ff5f14;
-} /* HTML Orange */
+}
+
+/* HTML Orange */
 .li3 {
   background: #a389ac;
-} /* CSS Purple */
+}
+
+/* CSS Purple */
 .li4 {
   background: #109085;
-} /* JS Teal */
+}
+
+/* JS Teal */
 .li5 {
   background: #295cb4;
-} /* NodeJs Blue */
+}
+
+/* NodeJs Blue */
 .li6 {
   background: #a389ac;
-} /* MongoDB Purple */
+}
+
+/* MongoDB Purple */
 
 /* Progress fill % for each (adjust width as you like) */
 .li1::after {
   width: 50%;
-} /* C++ */
+}
+
+/* C++ */
 .li2::after {
   width: 22%;
-} /* HTML */
+}
+
+/* HTML */
 .li3::after {
   width: 28%;
-} /* CSS */
+}
+
+/* CSS */
 .li4::after {
   width: 40%;
-} /* JS */
+}
+
+/* JS */
 .li5::after {
   width: 38%;
-} /* NodeJs */
+}
+
+/* NodeJs */
 .li6::after {
   width: 26%;
-} /* MongoDB */
+}
+
+/* MongoDB */
 
 .card-header {
   width: 100%;
@@ -209,37 +257,82 @@ a i {
   justify-content: space-between;
   padding: 0;
   margin: 0;
+  align-items: center;
+  gap: 1rem;
 }
 
 .card-header img {
   margin: 0;
   padding: 0;
-  height: 4rem;
+  width: 5.5rem;
+  height: 5.5rem;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.12));
+  transition: transform 120ms ease;
+}
+.card-header img:hover { transform: scale(1.04); }
+
+/* Upsize specific marks that need extra presence */
+.card-header img.logo-xl {
+  width: 6.5rem;
+  height: 6.5rem;
 }
 
-.card-header h1 {
+/* Extra emphasis for ICSE logo */
+.card-header img.logo-xxl {
+  width: 7.5rem;
+  height: 7.5rem;
+}
+
+/* For logos that need contrast on beige backgrounds (e.g., ICSE) */
+/* No longer needed since we swapped to a transparent ICSE logo */
+
+.card-header .card-title {
   margin: 0;
   padding: 0;
   color: #295cb4;
+  font-size: 1.3rem;
+  line-height: 1.2;
 }
 
-.card-header h2 {
+.card-header .card-subtitle {
   margin: 0;
   padding: 0;
   color: orangered;
+  font-weight: 600;
 }
 
-.card-header h3 {
+.card-header .card-meta {
   margin: 0;
   padding: 0;
-  color: #6d6d6d;
+  color: #295cb4;
+  display: inline-block;
+  background: #eaf1ff;
+  border: 1px solid #d6e3ff;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* Subtle hover polish for timeline items */
+.timeline1-item {
+  border-radius: 0.75rem;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.timeline1-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
 #experience {
   margin-top: 4rem;
+  padding-bottom: 1rem;
 }
 
-.skills-text h1 {
+.skills-text h1,
+.skills-text h2 {
   margin-bottom: 8rem;
 }
 
@@ -301,6 +394,9 @@ a i {
 
 .timeline1-item p {
   color: #6d6d6d;
+  max-width: 54ch;
+  line-height: 1.6;
+  margin-top: 0.5rem;
 }
 
 .timeline-divider {
@@ -317,6 +413,7 @@ a i {
   position: sticky;
   color: #295cb4;
   top: 25%;
+  z-index: 2;
 }
 
 .fa-circle {
@@ -324,6 +421,10 @@ a i {
   z-index: -1;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.timeline-dots .fa-circle {
+  z-index: 1;
 }
 
 .circle-1 {
@@ -376,6 +477,10 @@ a i {
   cursor: pointer;
 }
 
+.timeline-traveller .fa-car {
+  transform: rotate(-90deg);
+}
+
 .footer-div {
   background-image: linear-gradient(to right, #295cb4, indigo);
 }
@@ -398,6 +503,36 @@ a i {
   margin: 1rem;
 }
 
+.footer-div .skills-text {
+  height: 50%;
+}
+
+.footer-div .skills-text h1,
+.footer-div .skills-text h2,
+.footer-div .skills-text h1 i,
+.footer-div .skills-text h2 i {
+  color: white;
+}
+
+/* Skip link accessibility */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  background: #000;
+  color: #fff;
+  z-index: 9999;
+}
+
 .footer-form input,
 textarea {
   color: black;
@@ -415,7 +550,28 @@ textarea {
   font-size: 1.5rem;
 }
 
-@media screen and (width <= 700px) {
+.bottom-footer > div {
+  width: 50%;
+}
+
+.second-element-footer i {
+  color: white;
+  margin: 1rem;
+}
+
+@media screen and (width <=700px) {
+  .card-header img.logo-xl {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+  .card-header img.logo-xxl {
+    width: 6rem;
+    height: 6rem;
+  }
+  .card-header img {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
   .header-nav {
     display: none;
   }
@@ -450,10 +606,6 @@ textarea {
   .cn-icon {
     display: block;
     height: 4rem;
-  }
-
-  /* Add a grey background color on mouse-over */
-  .topnav a:hover {
   }
 
   /* Style the active link */
@@ -510,6 +662,10 @@ textarea {
     transform: translateX(-50%);
   }
 
+  .timeline-dots .fa-circle {
+    z-index: 1;
+  }
+
   .circle-1 {
     position: absolute;
     top: 0;
@@ -531,32 +687,8 @@ textarea {
   }
 }
 
-@media screen and (max-width: 700px) {
-  .cards-styled {
-    display: flex;
-    flex-wrap: wrap;              /* Force cards to wrap properly */
-    justify-content: center;      /* Center them */
-    gap: 14px;                    /* Add spacing */
-    padding: 0 8px;               /* Give small side padding */
-  }
-
-  .card {
-    flex: 1 1 calc(45% - 10px);   /* Each card takes ~45% of width */
-    max-width: 180px;             /* Prevent oversized cards */
-    min-width: 140px;             /* Prevent shrinking too much */
-    font-size: 0.85rem;
-    padding: 0.7rem;
-    margin: 0.4rem;
-    text-align: center;
-  }
-
-  .card::after {
-    width: 40%;                   /* Adjust fill size for mobile */
-  }
-
-  .skills-text h1 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    text-align: center;
-  }
+/* Education section styles moved from inline */
+#education {
+  padding-bottom: 1rem;
+  background-color: beige;
 }
