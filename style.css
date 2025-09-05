@@ -3,6 +3,58 @@ body {
   margin: 0;
   padding: 0;
   color: white;
+  overflow-x: hidden; /* prevent stray horizontal scroll */
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Layout variables for consistent proportions */
+:root {
+  --container-max: 1100px;
+  --gutter: min(4vw, 24px);
+  --section-gap: clamp(2rem, 4vw, 3rem);
+}
+
+/* Polished defaults */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Consistent focus outlines for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+#menu-toggle:focus-visible {
+  outline: 3px solid #174EA6;
+  outline-offset: 2px;
+}
+
+/* Subtle hover states */
+a:hover { opacity: 0.9; }
+.topnav a:hover { background: rgba(255,255,255,0.08); border-radius: 6px; }
+.header-nav a.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 3px;
+  background: #fff;
+  opacity: 0.85;
+  border-radius: 3px;
+}
+.topnav #myLinks a.is-active { background: rgba(255,255,255,0.15); border-radius: 8px; }
+
+/* Images behave responsively */
+img { max-width: 100%; height: auto; display: block; }
+
+/* Ensure padding and border don't cause overflow issues */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 header {
@@ -25,11 +77,13 @@ header {
   color: white;
   font-size: 1.25rem;
   text-decoration: none;
+  position: relative;
 }
 
 /* Topnav tweaks moved from inline */
+/* Avoid large gutters around the mobile dropdown by default */
 .topnav #myLinks {
-  margin: 4rem;
+  margin: 0;
 }
 
 .topnav .icon i {
@@ -94,6 +148,7 @@ a i {
   color: white;
   font-weight: bold;
   font-size: 3rem;
+  margin: 0.67em 0;
 }
 
 .name-img p {
@@ -101,17 +156,24 @@ a i {
 }
 
 .header-para {
-  width: 80%;
-  color: black;
-  margin: auto;
+  width: min(850px, 90%);
+  color: #1b1b1b;
+  margin: 2rem auto; /* equal top/bottom spacing */
   text-align: center;
-  font-size: 1.5rem;
-  margin-top: 8rem;
+  font-size: 1.2rem;
+}
+
+/* Tighter, bolder paragraph styling */
+.header-para p {
+  margin: 0 auto;         /* remove default <p> margins */
+  max-width: 68ch;        /* comfortable reading measure */
+  line-height: 1.55;      /* natural reading rhythm */
+  font-weight: 400;       /* normal weight */
 }
 
 .skills {
   background-color: aliceblue;
-  margin-top: 5rem;
+  margin-top: 2rem;   /* equals header-para bottom spacing via collapse */
   margin-bottom: 5rem;
   padding-bottom: 3rem;
 }
@@ -147,6 +209,7 @@ a i {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
 .cards-div {
@@ -333,7 +396,7 @@ a i {
 
 .skills-text h1,
 .skills-text h2 {
-  margin-bottom: 8rem;
+  margin-bottom: 2rem;
 }
 
 .timeline {
@@ -353,7 +416,7 @@ a i {
 }
 
 #experience p {
-  width: 50%;
+  /* Allow paragraphs to use available width; height reduces naturally */
   color: #6d6d6d;
 }
 
@@ -399,21 +462,32 @@ a i {
   margin-top: 0.5rem;
 }
 
+/* Add extra space under the timeline headings only here */
+#experience .skills-text h2,
+#education .skills-text h2 {
+  margin-bottom: 4rem;
+}
+
 .timeline-divider {
   position: absolute;
-  height: 75%;
+  height: 100%;
   width: 0;
   border: 3px dashed #295cb4;
   left: 50%;
-  top: 10%;
+  top: 0;
+  z-index: 1;
+  pointer-events: none; /* make divider non-interactive for smooth scroll */
 }
 
 .timeline-traveller {
-  transform: rotate(90deg);
-  position: sticky;
+  position: absolute; /* JS will translateY this element */
+  left: 0;            /* align to the dashed border */
+  top: .5rem;
   color: #295cb4;
-  top: 25%;
   z-index: 2;
+  transform: translate(-50%, 0) rotate(90deg); /* center on the line */
+  will-change: transform;
+  pointer-events: none;
 }
 
 .fa-circle {
@@ -469,6 +543,43 @@ a i {
   margin: 1rem;
 }
 
+/* Make all img elements responsive by default */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Consistent content width + side padding for major blocks */
+.header-para,
+.skills .skills-text,
+.skills .cards-div,
+#experience .timeline1,
+#education .timeline1,
+#portfolio .images-box,
+.footer-div .skills-text,
+.footer-div .bottom-footer {
+  max-width: var(--container-max);
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Ensure timeline uses the full container width on desktop */
+#experience .timeline1,
+#education .timeline1 {
+  width: 100%;
+}
+
+/* Section rhythm: compact but even spacing */
+section#experience,
+section#education,
+section#portfolio,
+section.skills {
+  padding-top: var(--section-gap);
+  padding-bottom: var(--section-gap);
+}
+
 .images img:hover {
   filter: brightness(90%) contrast(1.1);
   transform: scale(1.06) rotate(-1deg);
@@ -489,7 +600,7 @@ a i {
   display: flex;
   flex-direction: row;
   margin: auto;
-  padding: 4rem;
+  padding: 2rem;
 }
 
 .footer-form {
@@ -499,12 +610,34 @@ a i {
   margin: 1rem;
 }
 
+/* Button styling */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.1rem;
+  border-radius: 0.65rem;
+  border: 1px solid transparent;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 100ms ease, box-shadow 150ms ease, background 150ms ease;
+  width: fit-content;
+  margin: 0.5rem 1rem 0;
+}
+.btn-primary {
+  background: #174EA6;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(23,78,166,0.25);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(23,78,166,0.3); }
+.btn-primary:active { transform: translateY(0); box-shadow: 0 2px 10px rgba(23,78,166,0.22); }
+
 .second-element-footer {
   margin: 1rem;
 }
 
 .footer-div .skills-text {
-  height: 50%;
+  height: auto; /* avoid reserving vertical space */
 }
 
 .footer-div .skills-text h1,
@@ -535,19 +668,44 @@ a i {
 
 .footer-form input,
 textarea {
-  color: black;
-  width: 50%;
-  height: 2rem;
-  border: 2px solid white;
-  border-radius: 2rem;
-  margin: 1rem;
-  font-weight: bolder;
+  color: #111;
+  background: #fff;
+  width: min(520px, 100%);
+  height: 2.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 1rem;
+  margin: 0.5rem 1rem 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  transition: border-color 120ms ease, box-shadow 120ms ease, transform 100ms ease;
+}
+
+.footer-form input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #d6e3ff;
+  box-shadow: 0 0 0 3px rgba(23, 78, 166, 0.25), 0 4px 18px rgba(0, 0, 0, 0.18);
+}
+
+.footer-form input::placeholder,
+textarea::placeholder {
+  color: #999;
+}
+
+/* Textarea-specific tweaks for better writing experience */
+textarea {
+  min-height: 6.5rem;
+  line-height: 1.4;
+  padding-top: 0.75rem;
+  resize: vertical;
 }
 
 .footer-form label {
-  margin: 1rem;
-  font-weight: bold;
-  font-size: 1.5rem;
+  margin: 0.25rem 1rem 0.35rem;
+  font-weight: 650;
+  font-size: 1.125rem;
 }
 
 .bottom-footer > div {
@@ -559,7 +717,48 @@ textarea {
   margin: 1rem;
 }
 
+/* Footer heading spacing override */
+.footer-div .skills-text h1,
+.footer-div .skills-text h2 {
+  margin: 1.5rem 0 1.25rem;
+}
+
+/* Compact social row at the very bottom */
+.footer-div .header-list {
+  margin: 0.25rem 0;
+  padding-bottom: 0.5rem;
+}
+.footer-div .header-list li {
+  margin: 0.5rem;
+}
+
+/* Mobile-first refinements */
 @media screen and (width <=700px) {
+  /* General type scaling */
+  .name-img h1 {
+    font-size: 3rem; /* revert to original scale on mobile */
+  }
+
+  .skills-text h1,
+  .skills-text h2 {
+    font-size: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2.5rem;
+    margin-left: 0; /* avoid left shift on small screens */
+  }
+
+  .header-para {
+    font-size: 1.05rem;
+    margin: 1.25rem auto; /* equal spacing */
+    width: 92%;
+  }
+  .skills { margin-top: 1.25rem; }
+
+  .header-profile {
+    height: 15rem; /* revert */
+    width: 15rem;
+  }
+
   .card-header img.logo-xl {
     width: 5.5rem;
     height: 5.5rem;
@@ -569,9 +768,12 @@ textarea {
     height: 6rem;
   }
   .card-header img {
-    width: 4.5rem;
-    height: 4.5rem;
+    width: 3.75rem;
+    height: 3.75rem;
   }
+  .card-header .card-title { font-size: 1.1rem; }
+  .card-header .card-subtitle { font-size: 0.95rem; }
+  .card-header .card-meta { font-size: 0.8rem; }
   .header-nav {
     display: none;
   }
@@ -592,6 +794,10 @@ textarea {
   /* Hide the links inside the navigation menu (except for logo/home) */
   .topnav #myLinks {
     display: none;
+    margin: 0;            /* override desktop margin */
+    padding: 0.5rem 0;     /* tighter dropdown */
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(2px);
   }
 
   /* Style navigation menu links */
@@ -605,7 +811,7 @@ textarea {
 
   .cn-icon {
     display: block;
-    height: 4rem;
+    height: 4rem; /* revert */
   }
 
   /* Style the active link */
@@ -616,43 +822,49 @@ textarea {
 
   .timeline1 {
     position: relative;
-    /* border: 2px solid black; */
-    width: 75%;
-    margin: auto;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem 0 2.5rem; /* a bit more breathing room from the divider */
+    overflow-x: hidden;     /* guard against accidental overflow */
   }
 
   .timeline1-item {
     position: relative;
-    width: 70%;
-    left: 5%;
+    width: 100%;
+    left: 0;
     min-height: 150px;
-    /* border: 2px solid black; */
-    margin: 1rem;
+    margin: 1.5rem 0; /* add vertical space between items */
+    padding-left: 0.5rem; /* keep text away from divider */
+    box-sizing: border-box;
   }
 
   .timeline1-item:nth-child(n) {
     position: relative;
-    left: 20%;
+    left: 0;
+    width: 100%;
   }
 
   .timeline1-item p {
     color: #6d6d6d;
+    font-size: 0.95rem;
+    line-height: 1.55;
   }
 
   .timeline-divider {
     position: absolute;
-    height: 75%;
+    height: 100%;
     width: 0;
     border: 3px dashed #295cb4;
-    left: 10%;
-    top: 10%;
+    left: 1rem; /* fixed position inside the left padding */
+    top: 1rem;
   }
 
   .timeline-traveller {
-    transform: rotate(90deg);
-    position: sticky;
+    position: absolute;
+    left: 0;
+    top: 0;
     color: #295cb4;
-    top: 25%;
+    transform: translate(-50%, 0) rotate(90deg);
   }
 
   .fa-circle {
@@ -684,6 +896,71 @@ textarea {
   .circle-4 {
     position: absolute;
     top: 90%;
+  }
+
+  /* Skills cards: allow wrapping and comfortable tap targets */
+  .card {
+    width: auto;
+    min-width: 8rem;
+    padding: 0.6rem 1rem;
+  }
+
+  /* Let paragraphs use full width on phones */
+  .timeline1-item p {
+    max-width: 100%;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  /* Project gallery stacks */
+  .images-box {
+    justify-content: center;
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+  .images img {
+    width: 90vw;
+    height: auto;
+    margin: 0.5rem 0;
+  }
+
+  /* Footer stacks into a single column */
+  .bottom-footer {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  .bottom-footer > div {
+    width: 100%;
+  }
+  .footer-form input,
+  textarea {
+    width: 100%;
+  }
+
+  /* Tighten footer header and ensure centering */
+  .footer-div {
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+  }
+  .footer-div .skills-text {
+    justify-content: center;
+  }
+  .footer-div .skills-text h2 {
+    font-size: 1.6rem;
+    margin: 0.75rem 0 1rem;
+  }
+  .footer-form label {
+    font-size: 1rem;
+    margin: 0.25rem 0.75rem 0.25rem;
+  }
+  .footer-form input,
+  .footer-form textarea {
+    height: 2.5rem;
+    border-radius: 0.75rem;
+  }
+  .footer-div .header-list li {
+    margin: 0.25rem 0.5rem;
   }
 }
 
