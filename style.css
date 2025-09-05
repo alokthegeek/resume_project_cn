@@ -439,6 +439,7 @@ a i {
   /* border: 2px solid black; */
   width: 75%;
   margin: auto;
+  overflow: visible; /* avoid creating nested scrollbars */
 }
 
 .timeline1-item {
@@ -448,6 +449,7 @@ a i {
   min-height: 150px;
   /* border: 2px solid black; */
   margin: 1rem;
+  overflow: visible;
 }
 
 .timeline1-item:nth-child(2n) {
@@ -826,6 +828,7 @@ textarea {
     margin: 0 auto;
     padding: 0 1rem 0 2.5rem; /* a bit more breathing room from the divider */
     overflow-x: hidden;     /* guard against accidental overflow */
+    overflow-y: visible;    /* no inner vertical scrollbars */
   }
 
   .timeline1-item {
@@ -856,13 +859,13 @@ textarea {
     width: 0;
     border: 3px dashed #295cb4;
     left: 1rem; /* fixed position inside the left padding */
-    top: 1rem;
+    top: 0;  /* align with container top to avoid overflow and visual gap */
   }
 
   .timeline-traveller {
     position: absolute;
     left: 0;
-    top: 0;
+    top: .5rem;
     color: #295cb4;
     transform: translate(-50%, 0) rotate(90deg);
   }
