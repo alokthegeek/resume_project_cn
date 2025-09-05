@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alok Singh</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Readable, modern typeface -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/7de4d613e3.js" crossorigin="anonymous"></script>
     <script>
         /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
@@ -360,7 +364,9 @@
                         <input type="email" />
 
                         <label for="message">Message</label>
-                        <textarea id="message" rows="4" cols="50"></textarea>
+                        <textarea id="message" rows="4" cols="50" placeholder="Write your message..."></textarea>
+
+                        <button type="submit" class="btn btn-primary">Send</button>
                     </form>
                 </div>
 
@@ -394,6 +400,86 @@
             </div>
         </div>
     </footer>
-</body>
+    <script>
+      // Animate the timeline traveller (plane/car) with scroll
+      (function () {
+        function clamp(v, min, max) { return Math.max(min, Math.min(v, max)); }
+        function updateTravellers() {
+          var timelines = document.querySelectorAll('.timeline1');
+          // startOffset/endOffset calculated per icon size below
+          timelines.forEach(function (tl) {
+            var divider = tl.querySelector('.timeline-divider');
+            var traveller = divider && divider.querySelector('.timeline-traveller');
+            if (!divider || !traveller) return;
+
+            var rect = divider.getBoundingClientRect();
+            var iconH = traveller.offsetHeight || 32;
+            var startOffset = Math.round(iconH * 0.4); // keep full icon visible at top
+            var endOffset = Math.round(iconH * 0.3);   // stop a bit before the last dot
+            // Calculate distance scrolled past the divider's top relative to the document
+            var dividerTopDoc = rect.top + window.scrollY;
+            var y = window.scrollY - dividerTopDoc + startOffset;
+            var maxY = rect.height - iconH - endOffset;
+            var yClamped = clamp(y, 0, Math.max(0, maxY));
+            traveller.style.transform = 'translate(-50%, ' + yClamped + 'px) rotate(90deg)';
+          });
+        }
+
+        var ticking = false;
+        function onScroll() {
+          if (!ticking) {
+            window.requestAnimationFrame(function () {
+              updateTravellers();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }
+        var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) {
+          // Keep icons at the start, no animation.
+          document.querySelectorAll('.timeline1 .timeline-traveller').forEach(function (el) {
+            el.style.transform = 'translate(-50%, 0) rotate(90deg)';
+          });
+        } else {
+          window.addEventListener('scroll', onScroll, { passive: true });
+          window.addEventListener('resize', updateTravellers);
+          // Initial position
+          updateTravellers();
+        }
+      })();
+      // Scrollspy: highlight current section link in both navs
+      (function () {
+        var targets = ['home','about','skills','experience','education','portfolio','contact'];
+        var links = Array.from(document.querySelectorAll('.header-nav a, #myLinks a'));
+        function setActive(id) {
+          links.forEach(function (a) {
+            var match = a.getAttribute('href') === '#' + id;
+            a.classList.toggle('is-active', !!match);
+          });
+        }
+        var obs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) setActive(e.target.id);
+          });
+        }, { root: null, threshold: 0.55 });
+        targets.forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) obs.observe(el);
+        });
+
+        // Close mobile menu after tapping a link
+        var mobileLinks = document.querySelectorAll('#myLinks a');
+        mobileLinks.forEach(function (a) {
+          a.addEventListener('click', function () {
+            var x = document.getElementById('myLinks');
+            var btn = document.getElementById('menu-toggle');
+            if (x) x.style.display = 'none';
+            if (btn) btn.setAttribute('aria-expanded', 'false');
+          });
+        });
+      })();
+    </script>
+  </body>
 
 </html>
